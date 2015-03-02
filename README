@@ -1,6 +1,18 @@
 pleaserun
 
-This is the pleaserun module.
+This is the pleaserun module
+
+```
+  pleaserun {'redis':
+    ensure   => present,
+    name     => 'redis',
+    program  => '/opt/redis/bin/redis-server',
+  } ->
+
+  service { 'redis':
+    ensure => running
+  }
+```
 
 License
 -------
