@@ -4,9 +4,11 @@ This is the pleaserun module
 
 ```
   pleaserun {'redis':
-    ensure   => present,
-    name     => 'redis',
-    program  => '/opt/redis/bin/redis-server',
+    ensure         => present,
+    name           => 'redis',
+    platform       => 'sysv',
+    target_version => 'lsb-3.1',
+    program        => '/opt/redis/bin/redis-server',
   } ->
 
   service { 'redis':

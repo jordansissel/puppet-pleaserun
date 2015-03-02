@@ -27,6 +27,26 @@ Puppet::Type.newtype(:pleaserun) do
     end
   end
 
+  newparam(:platform) do
+    desc "The name of the platform to target, such as sysv, upstart, etc"
+
+    validate do |value|
+      if !value.is_a?(String)
+        raise ArgumentError, "Platform must be a String, not #{value.class}"
+      end
+    end
+  end
+
+  newparam(:target_version) do
+    desc "The version of the platform to target, such as 'lsb-3.1' for sysv or '1.5' for upstart"
+
+    validate do |value|
+      if !value.is_a?(String)
+        raise ArgumentError, "Version must be a String, not #{value.class}"
+      end
+    end
+  end
+
   newparam(:args) do
     desc "The arguments to pass to the program."
 
@@ -43,7 +63,7 @@ Puppet::Type.newtype(:pleaserun) do
       end
     end
 
-    
+
     munge do |value|
       if value.is_a?(String)
         [value]

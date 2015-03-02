@@ -4,11 +4,16 @@ require "pleaserun/detector"
 Puppet::Type.type(:pleaserun).provide(:default) do
   desc "The default and most awesome pleaserun experience."
 
+  def platform
+
   def runner
     return @runner if @runner
 
-    # XXX: Split these into separate "providers"
-    platform, version = PleaseRun::Detector.detect
+    platform = @resource[:platform]
+    version = @resource[:target_version]
+    if platform.nil? && version.nil?
+        platform, version = PleaseRun::Detector.detect
+    end
 
     # silly hack for now until I properly refactor this.
     cli = PleaseRun::CLI.new([])
@@ -18,6 +23,7 @@ Puppet::Type.type(:pleaserun).provide(:default) do
     @runner = runner_klass.new(version)
     @runner.name = @resource[:name]
     @runner.program = @resource[:program]
+    @runner.target_version = version
     # Args are optional.
     @runner.args = @resource[:args] if @resource[:args]
     return @runner
