@@ -2,7 +2,6 @@ Puppet::Type.type(:pleaserun).provide(:default) do
   desc "The default and most awesome pleaserun experience."
 
   confine :feature => :pleaserun
-
   if Puppet.features.pleaserun?
     require "pleaserun/platform/base"
     require "pleaserun/cli"
